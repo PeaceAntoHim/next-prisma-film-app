@@ -1,8 +1,10 @@
 import Head from 'next/head'
-import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import { PrismaClient } from '@prisma/client'
 
-export default function Home() {
+const prisma = new PrismaClient()
+
+export default function Home({ data }) {
   return (
     <div className={styles.container}>
       <Head>
@@ -12,21 +14,37 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        
-      </main>
 
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
+          <ul className={styles.movielist}>
+              {data.map(item => (
+                <li key="item.id">{item.title}</li>
+              ))}
+          </ul>
+
+      </main>
     </div>
   )
 }
+
+export async function getServerSideProps() {
+
+  const movies = await prisma.movie.findMany()
+
+  // const data = [
+  //   {
+  //     id: 1,
+  //     title: "title",
+  //   },
+  //   {
+  //     id: 2,
+  //     title: "another title",
+  //   },
+  // ];
+
+  return {
+    props: {
+      data: movies
+    }
+  }
+}
+
