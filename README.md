@@ -4,9 +4,14 @@
     3. Third you have to initialize you project with write "npx prisma init"
 
 ## Step working with prisma, next and mongodb
-    1. First you have to create schema table database in you schema.prisma and you have create mode your_example_table to create database.
+    1. First you have to create schema collection database in your schema.prisma and you have create mode your_example_table to create database.
     2. For mongodb you have to write this " id String @id @default(dbgenerated()) @map("_id") @db.ObjectId" to generate id automaticly
     3. After made schema model you have to write this in cli "npx prisma dev --preview-feature" but this commnd just for relational database if you use mongo you have write "npx prisma generate" to generate data
+
+## Step Working with prisma, next and mysql
+    1. First you have create schema table in mysql database so you than to migrate the data you have to write "npx prisma migrate dev"
+    2 After that enter for new migration is "first_migrations"
+    3 Than you can write "npx prisma studio" to get good visual representation
 
 
 
