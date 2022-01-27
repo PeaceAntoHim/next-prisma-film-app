@@ -1,3 +1,17 @@
+## How create next app with prisma and mongo
+    1. First you have to write "npm i -D prisma" to install all prisma dependencies.
+    2. Second you have install reguler dependencies for prisma client you have wrote this in cli "npm i @prisma/client"
+    3. Third you have to initialize you project with write "npx prisma init"
+
+## Step working with prisma, next and mongodb
+    1. First you have to create schema table database in you schema.prisma and you have create mode your_example_table to create database.
+    2. For mongodb you have to write this " id String @id @default(dbgenerated()) @map("_id") @db.ObjectId" to generate id automaticly
+    3. After made schema model you have to write this in cli "npx prisma dev --preview-feature" but this commnd just for relational database if you use mongo you have write "npx prisma generate" to generate data
+
+
+
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
