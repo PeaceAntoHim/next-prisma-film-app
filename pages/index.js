@@ -8,12 +8,12 @@ const prisma = new PrismaClient()
 export default function Home({ data }) {
 
       /* This variable for input data */
-      const [fromData, setFromData] = useState({})
+      const [formData, setFormData] = useState({})
 
       /* This arrow function to define saveMovie */
       const saveMovie = e => {
         e.preventDefault();
-        console.log(fromData);
+        console.log(formData);
       }
 
 
@@ -40,13 +40,13 @@ export default function Home({ data }) {
           </ul>
 
           {/* This form to input data */}
-          <from className={styles.movieform} onSubmit={saveMovie}>
+          <form className={styles.movieform} onSubmit={saveMovie}>
             <input type="text" placeholder="Enter the title movie.." name="title" onChange={e=> setFormData({ ...formData, title: e.target.value })} />
             <input type="text" placeholder="Enter the year movie.." name="year" onChange={e=> setFormData({ ...formData, year: +e.target.value })} />
-            <textarea name="description" id="" cols="30" rows="10" placeholder="Enter the descriot movie.." onChange={e=> setFormData({ ...formData, description: e.target.value })} />
-            <input type="text" placeholder="Enter the slug.." onChange={e=> setForm({ ...formData, slug: e.target.value })} />
-            <button type="submit">Add Movie</button>
-          </from> 
+            <textarea name="description" id="" cols="30" rows="10" placeholder="Enter the description movie.." onChange={e=> setFormData({ ...formData, description: e.target.value })} />
+            <input type="text" placeholder="Enter the slug.." name="slug" onChange={e=> setFormData({ ...formData, slug: e.target.value })} />
+            <button type="submit">Add New Movie</button>
+          </form> 
                 
       </main>
     </div>
