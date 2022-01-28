@@ -1,10 +1,24 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
+import { useState } from 'react'
 import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
 export default function Home({ data }) {
+
+      /* This variable for input data */
+      const [fromData, setFromData] = useState({})
+
+      /* This arrow function to define saveMovie */
+      const saveMovie = e => {
+        e.preventDefault();
+        console.log(fromData);
+      }
+
+
+
+  /* This for read data */
   return (
     <div className={styles.container}>
       <Head>
@@ -17,10 +31,23 @@ export default function Home({ data }) {
 
           <ul className={styles.movielist}>
               {data.map(item => (
-                <li key="item.id">{item.title}</li>
+                <li key="item.id">
+                <span><strong>{item.title}</strong></span>
+                <span>{item.year}</span>
+                <span>{item.description}</span>
+                </li>
               ))}
           </ul>
 
+          {/* This form to input data */}
+          <from className={styles.movieform} onSubmit={saveMovie}>
+            <input type="text" placeholder="Enter the title movie.." name="title" onChange={e=> setFormData({ ...formData, title: e.target.value })} />
+            <input type="text" placeholder="Enter the year movie.." name="year" onChange={e=> setFormData({ ...formData, year: +e.target.value })} />
+            <textarea name="description" id="" cols="30" rows="10" placeholder="Enter the descriot movie.." onChange={e=> setFormData({ ...formData, description: e.target.value })} />
+            <input type="text" placeholder="Enter the slug.." onChange={e=> setForm({ ...formData, slug: e.target.value })} />
+            <button type="submit">Add Movie</button>
+          </from> 
+                
       </main>
     </div>
   )
@@ -43,7 +70,7 @@ export async function getServerSideProps() {
 
   return {
     props: {
-      data: movies
+      data: movies 
     }
   }
 }
