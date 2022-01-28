@@ -13,6 +13,10 @@
   margin-bottom: 20px;
 }
 
+.movielist a {
+  color: blue;
+}
+
 .movielist span {
   display: block;
   margin-bottom: 5px;

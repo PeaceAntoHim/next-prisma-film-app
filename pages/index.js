@@ -2,6 +2,7 @@ import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import { useState } from 'react'
 import { PrismaClient } from '@prisma/client'
+import Link from 'next/link'
 
 const prisma = new PrismaClient()
 
@@ -9,13 +10,28 @@ export default function Home({ data }) {
 
       /* This variable for input data */
       const [formData, setFormData] = useState({})
+      const [movies, setMovies] = useState(data)
 
       /* This arrow function to define saveMovie */
-      const saveMovie = e => {
-        e.preventDefault();
-        console.log(formData);
-      }
+          // const saveMovie = e => {
+          //   e.preventDefault();
+          //   console.log(formData);
+          // }
+      
+      /* This async function to define saveMovie */
+      async function saveMovie(e) {
+          e.preventDefault();
+          setMovies([...movies, formData])
+          /* set movies distructuring */
+          const response = await fetch('/api/movies', {
+              method: 'POST',
+              body: JSON.stringify(formData)
+          })
 
+          return await response.json()
+      }
+      
+      
 
 
   /* This for read data */
@@ -30,11 +46,14 @@ export default function Home({ data }) {
       <main className={styles.main}>
 
           <ul className={styles.movielist}>
-              {data.map(item => (
+              {movies.map(item => (
                 <li key="item.id">
                 <span><strong>{item.title}</strong></span>
                 <span>{item.year}</span>
                 <span>{item.description}</span>
+                <Link href={`/movies/${item.slug}`}>
+                    <a>More About this movie</a>
+                </Link>
                 </li>
               ))}
           </ul>
