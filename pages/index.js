@@ -1,38 +1,30 @@
 import Head from 'next/head'
-import styles from '../styles/Home.module.css'
 import { useState } from 'react'
+import { useRouter } from 'next/router'
 import { PrismaClient } from '@prisma/client'
-import Link from 'next/link'
+import styles from '../styles/Home.module.css'
 
 const prisma = new PrismaClient()
 
 export default function Home({ data }) {
+    const router = new useRouter()
 
       /* This variable for input data */
       const [formData, setFormData] = useState({})
       const [movies, setMovies] = useState(data)
-
-      /* This arrow function to define saveMovie */
-          // const saveMovie = e => {
-          //   e.preventDefault();
-          //   console.log(formData);
-          // }
-      
       /* This async function to define saveMovie */
       async function saveMovie(e) {
-          e.preventDefault();
+        e.preventDefault();
           setMovies([...movies, formData])
           /* set movies distructuring */
           const response = await fetch('/api/movies', {
               method: 'POST',
               body: JSON.stringify(formData)
-          })
-
+          })  
+          
+          router.push('/show')
           return await response.json()
       }
-      
-      
-
 
   /* This for read data */
   return (
@@ -45,28 +37,38 @@ export default function Home({ data }) {
 
       <main className={styles.main}>
 
-          <ul className={styles.movielist}>
-              {movies.map(item => (
-                <li key="item.id">
-                <span><strong>{item.title}</strong></span>
-                <span>{item.year}</span>
-                <span>{item.description}</span>
-                <Link href={`/movies/${item.slug}`}>
-                    <a>More About this movie</a>
-                </Link>
-                </li>
-              ))}
-          </ul>
-
           {/* This form to input data */}
           <form className={styles.movieform} onSubmit={saveMovie}>
-            <input type="text" placeholder="Enter the title movie.." name="title" onChange={e=> setFormData({ ...formData, title: e.target.value })} />
-            <input type="text" placeholder="Enter the year movie.." name="year" onChange={e=> setFormData({ ...formData, year: +e.target.value })} />
-            <textarea name="description" id="" cols="30" rows="10" placeholder="Enter the description movie.." onChange={e=> setFormData({ ...formData, description: e.target.value })} />
-            <input type="text" placeholder="Enter the slug.." name="slug" onChange={e=> setFormData({ ...formData, slug: e.target.value })} />
+            <input 
+              type="text"
+              placeholder="Enter the title movie.."
+              name="title" 
+              onChange={e=> setFormData({ ...formData, title: e.target.value })} 
+              required 
+            />
+            <input 
+              type="number" 
+              placeholder="Enter the year movie.." 
+              name="year" 
+              onChange={e=> setFormData({ ...formData, year: +e.target.value })} 
+              required 
+            />
+            <textarea 
+              name="description" 
+              cols="30" 
+              rows="10" 
+              placeholder="Enter the description movie.." 
+              onChange={e=> setFormData({ ...formData, description: e.target.value })} required 
+            />
+            <input 
+              type="text" 
+              placeholder="Enter the slug.." 
+              name="slug" 
+              onChange={e=> setFormData({ ...formData, slug: e.target.value })} 
+              required 
+            />
             <button type="submit">Add New Movie</button>
           </form> 
-                
       </main>
     </div>
   )
@@ -75,17 +77,6 @@ export default function Home({ data }) {
 export async function getServerSideProps() {
 
   const movies = await prisma.movie.findMany()
-
-  // const data = [
-  //   {
-  //     id: 1,
-  //     title: "title",
-  //   },
-  //   {
-  //     id: 2,
-  //     title: "another title",
-  //   },
-  // ];
 
   return {
     props: {
