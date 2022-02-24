@@ -7,6 +7,7 @@ const prisma = new PrismaClient()
 
 export default function Home({ data }) {
 
+ 
   /* This for read data */
   return (
     <div className={styles.container}>
@@ -29,10 +30,6 @@ export default function Home({ data }) {
                   <br /><br />
                   <Link href={`/update/${item.slug}`}>
                      <a>Edit This</a>
-                  </Link>
-                  <br /><br />
-                  <Link href={`/delete/${item.slug}`}>
-                    <a>Delete this movie</a>
                   </Link>
                 </li>
               ))}

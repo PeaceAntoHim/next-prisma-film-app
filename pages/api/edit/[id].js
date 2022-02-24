@@ -10,7 +10,7 @@ export default async (req, res) => {
       description,
       slug
    } = req.body;
-   const movie = await prisma.movie.update({
+   const updateMovie = await prisma.movie.update({
 
       where: { id: Number(movieId) },
       data: { 
@@ -20,5 +20,5 @@ export default async (req, res) => {
          slug
        },
    })
-  res.json(movie);
+  res.json(updateMovie);
 };
