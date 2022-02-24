@@ -31,6 +31,10 @@ export default function Home({ data }) {
                   <Link href={`/update/${item.slug}`}>
                      <a>Edit This</a>
                   </Link>
+                  <br /><br />
+                  <Link href="/">
+                    <a>Create Movie</a>
+                  </Link>
                 </li>
               ))}
           </ul> 

@@ -15,6 +15,7 @@ model Movie {
     id Int @id @default(autoincrement())
     title String 
     year Int
-    description String
-    slug String
+    description String @db.VarChar(5000)
+    slug String 
 }
+

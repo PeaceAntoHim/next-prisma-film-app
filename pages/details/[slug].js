@@ -20,8 +20,6 @@ export default function Detail({ movie }) {
         router.push('/show')
         return await response.json()
       }
-
-
     return(
         <div className={styles.container}>
             <Head>
