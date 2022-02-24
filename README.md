@@ -13,7 +13,93 @@
     2 After that enter for new migration is "first_migrations"
     3 Than you can write "npx prisma studio" to get good visual representation
 
+## Model data you can make use prisma
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
 
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Category {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique @db.VarChar(150)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  products Product[]
+  @@map("categories")
+}
+
+model Tag {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique @db.VarChar(150)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  productTags ProductTag[]
+  @@map("tags")
+}
+
+enum Visibility {
+  VISIBLE
+  HIDDEN
+  FEATURED
+  DEAL
+}
+
+model Product {
+  id          Int        @id @default(autoincrement())
+  name        String     @unique @db.VarChar(200)
+  slug        String     @unique @db.VarChar(200)
+  reference   String     @unique @default(uuid()) @db.VarChar(50)
+  description String?    @db.Text
+  price       Float      @db.Float
+  isAvailable Boolean    @default(true) @map("is_available") @db.TinyInt
+  viewCount   Int        @default(0) @map("view_count") @db.Int
+  visibility  Visibility @default(VISIBLE)
+  pictures    Json
+  extras      Json       @db.Json
+  createdAt   DateTime   @default(now()) @map("created_at")
+  updatedAt   DateTime   @updatedAt @map("updated_at")
+  category    Category   @relation(fields: [categoryId], references: [id])
+  categoryId  Int        @map("category_id")
+  productTags ProductTag[]
+  @@map("products")
+}
+
+model ProductTag {
+  product   Product @relation(fields: [productId], references: [id])
+  productId Int     @map("product_id")
+  tag       Tag     @relation(fields: [tagId], references: [id])
+  tagId     Int     @map("tag_id")
+  @@id([productId, tagId])
+  @@map("products_tags")
+}
+
+@default
+@map
+Native types, such as @db.ObjectId
+The following attributes are not supported:
+
+@unique
+@id
+@relation
+@ignore
+@updatedAt
+@createdAt
+
+
+## How to CRUD use prisma 
+
+findMany
+findUnique
+create
+update
+upsert
+delete
+updateMany
+deleteMany
 
 
 
