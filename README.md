@@ -93,14 +93,14 @@ The following attributes are not supported:
 
 ## How to CRUD use prisma 
 
-findMany
-findUnique
-create
-update
-upsert
-delete
-updateMany
-deleteMany
+    findMany
+    findUnique
+    create
+    update
+    upsert
+    delete
+    updateMany
+    deleteMany
 
 
 
