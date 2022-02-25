@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import dashify from 'dashify';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import styles from '../../styles/Home.module.css';
@@ -67,8 +68,8 @@ function Update({ movie, data }) {
                   type="text" 
                   placeholder="Enter the slug.." 
                   name="slug" 
-                  defaultValue={ movie.slug } 
-                  onChange={e=> setFormData({ ...formData, slug: e.target.value })} 
+                  disabled
+                  value={dashify(formData.title ?? "")}
                   required 
                />
                   <button type="submit">Add New Movie</button>

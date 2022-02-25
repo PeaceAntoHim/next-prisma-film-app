@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/router'
 import { PrismaClient } from '@prisma/client'
 import styles from '../styles/Home.module.css'
+import dashify from 'dashify'
 
 const prisma = new PrismaClient()
 
@@ -65,7 +66,8 @@ export default function Home({ data }) {
               type="text" 
               placeholder="Enter the slug.." 
               name="slug" 
-              onChange={e=> setFormData({ ...formData, slug: e.target.value })} 
+              value={dashify(formData.title ?? "")}
+              disabled
               required 
             />
             <button type="submit">Add New Movie</button>

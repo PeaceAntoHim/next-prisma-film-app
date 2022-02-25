@@ -14,6 +14,7 @@
     3 Than you can write "npx prisma studio" to get good visual representation
 
 ## Model data you can make use prisma
+
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
